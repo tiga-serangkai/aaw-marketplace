@@ -1,6 +1,7 @@
 import { BadRequestResponse, InternalServerErrorResponse, NotFoundResponse } from "@src/commons/patterns";
 import { NewPayment } from "@db/schema/payment";
 import { payOrder } from "../dao/payOrder.dao";
+import { OrderCacheService } from '@src/utils/cache';
 
 export const payOrderService = async (
     orderId: string,
@@ -23,6 +24,10 @@ export const payOrderService = async (
         }
 
         const payment = await payOrder(paymentData);
+
+        // Invalidate cache
+        const cacheService = OrderCacheService.getInstance();
+        await cacheService.invalidateOrderDetail(SERVER_TENANT_ID, orderId);
 
         return {
             data: payment,

@@ -2,6 +2,7 @@ import { InternalServerErrorResponse, NotFoundResponse, UnauthorizedResponse } f
 import { getOrderById } from "../dao/getOrderById.dao";
 import { cancelOrder } from "../dao/cancelOrder.dao";
 import { User } from "@type/user";
+import { OrderCacheService } from '@src/utils/cache';
 
 export const cancelOrderService = async (
     user: User,
@@ -29,6 +30,11 @@ export const cancelOrderService = async (
 
         await cancelOrder(SERVER_TENANT_ID, user.id, order_id);
         order.order_status = 'CANCELLED';
+
+        // Invalidate cache
+        const cacheService = OrderCacheService.getInstance();
+        await cacheService.invalidateOrderList(SERVER_TENANT_ID, user.id);
+        await cacheService.invalidateOrderDetail(SERVER_TENANT_ID, order_id);
 
         return {
             data: order,

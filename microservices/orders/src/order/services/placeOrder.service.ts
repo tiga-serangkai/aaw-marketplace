@@ -1,9 +1,11 @@
 import { getAllCartItems } from "@src/cart/dao/getAllCartItems.dao";
 import { BadRequestResponse, InternalServerErrorResponse, NotFoundResponse } from "@src/commons/patterns";
 import { createOrder } from "../dao/createOrder.dao";
+import { createOrderDetail } from "../dao/createOrderDetail.dao";
 import axios, { AxiosResponse } from "axios";
 import { Product } from "@type/product";
 import { User } from "@type/user";
+import { OrderCacheService } from '@src/utils/cache';
 
 export const placeOrderService = async (
     user: User,
@@ -45,8 +47,25 @@ export const placeOrderService = async (
             shipping_provider as 'JNE' | 'TIKI' | 'SICEPAT' | 'GOSEND' | 'GRAB_EXPRESS',
         );
 
+        if (!order) {
+            return new InternalServerErrorResponse("Failed to create order").generate();
+        }
+
+        // create order detail
+        const orderDetail = await createOrderDetail(SERVER_TENANT_ID, order.id, cartItems[0].product_id, cartItems[0].quantity, cartItems[0].total_price);
+        if (!orderDetail) {
+            return new InternalServerErrorResponse("Failed to create order detail").generate();
+        }
+
+        // Invalidate cache
+        const cacheService = OrderCacheService.getInstance();
+        await cacheService.invalidateOrderList(SERVER_TENANT_ID, user.id);
+
         return {
-            data: order,
+            data: {
+                order,
+                orderDetail,
+            },
             status: 201,
         }
     } catch (err: any) {
