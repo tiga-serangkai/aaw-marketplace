@@ -19,7 +19,7 @@ app.use(metricsMiddleware);
 app.use(cors());
 app.use(express.json());
 
-app.use("/user", userRoutes);
+app.use("/api/auth", userRoutes);
 
 app.get("/", (req, res) => {
   return res.status(200).send("Authentication Microservice is running!");

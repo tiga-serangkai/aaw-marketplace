@@ -51,7 +51,7 @@ export const loginService = async (
         })
 
         // Cache the token
-        await cacheService.cacheToken(user.id, token);
+        await cacheService.cacheToken(user.id as string, token);
 
         return {
             data: {
