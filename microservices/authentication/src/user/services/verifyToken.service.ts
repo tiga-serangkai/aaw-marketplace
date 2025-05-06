@@ -1,6 +1,7 @@
 import { InternalServerErrorResponse, UnauthorizedResponse } from "@src/commons/patterns";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { getUserById } from "../dao/getUserById.dao";
+import { AuthCacheService } from '@src/utils/cache';
 
 export const verifyTokenService = async (
     token: string
@@ -18,6 +19,14 @@ export const verifyTokenService = async (
         }
         if (tenant_id !== SERVER_TENANT_ID) {
             return new UnauthorizedResponse("Invalid token").generate();
+        }
+
+        // Check if token exists in cache
+        const cacheService = AuthCacheService.getInstance();
+        const cachedToken = await cacheService.getToken(id);
+        
+        if (!cachedToken || cachedToken !== token) {
+            return new UnauthorizedResponse("Invalid or expired token").generate();
         }
 
         const user = await getUserById(id, SERVER_TENANT_ID);
