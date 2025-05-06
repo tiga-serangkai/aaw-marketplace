@@ -1,5 +1,6 @@
 import { InternalServerErrorResponse } from "@src/commons/patterns";
 import { editProductById } from "../dao/editProductById.dao";
+import { CacheService } from "@src/utils/cache";
 
 export const editProductService = async (
     id: string,
@@ -22,6 +23,16 @@ export const editProductService = async (
             quantity_available,
             category_id,
         })
+
+        // Invalidate caches
+        const cacheService = CacheService.getInstance();
+        await cacheService.del(`product:${SERVER_TENANT_ID}:${id}`);
+        await cacheService.del(`products:all:${SERVER_TENANT_ID}`);
+        
+        // If category is changed, invalidate both old and new category caches
+        if (category_id) {
+            await cacheService.del(`products:category:${SERVER_TENANT_ID}:${category_id}`);
+        }
 
         return {
             data: product,

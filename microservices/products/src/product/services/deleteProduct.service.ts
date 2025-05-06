@@ -1,5 +1,6 @@
 import { InternalServerErrorResponse } from "@src/commons/patterns"
 import { deleteProductById } from "../dao/deleteProductById.dao";
+import { CacheService } from "@src/utils/cache";
 
 export const deleteProductService = async (
     id: string,
@@ -11,6 +12,14 @@ export const deleteProductService = async (
         }
 
         const product = await deleteProductById(SERVER_TENANT_ID, id);
+
+        // Invalidate caches
+        const cacheService = CacheService.getInstance();
+        await cacheService.del(`product:${SERVER_TENANT_ID}:${id}`);
+        await cacheService.del(`products:all:${SERVER_TENANT_ID}`);
+        if (product?.category_id) {
+            await cacheService.del(`products:category:${SERVER_TENANT_ID}:${product.category_id}`);
+        }
 
         return {
             data: {

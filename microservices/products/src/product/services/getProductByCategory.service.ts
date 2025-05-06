@@ -1,5 +1,6 @@
 import { InternalServerErrorResponse } from "@src/commons/patterns";
 import { getProductByCategory } from "../dao/getProductByCategory.dao";
+import { CacheService } from "@src/utils/cache";
 
 export const getProductByCategoryService = async (
     category_id: string,
@@ -10,7 +11,25 @@ export const getProductByCategoryService = async (
             return new InternalServerErrorResponse('Server Tenant ID not found').generate()
         }
 
+        const cacheService = CacheService.getInstance();
+        const cacheKey = `products:category:${SERVER_TENANT_ID}:${category_id}`;
+
+        // Try to get from cache first
+        const cachedProducts = await cacheService.get(cacheKey);
+        if (cachedProducts) {
+            return {
+                data: {
+                    products: cachedProducts
+                },
+                status: 200
+            }
+        }
+
+        // If not in cache, get from database
         const products = await getProductByCategory(SERVER_TENANT_ID, category_id);
+
+        // Store in cache
+        await cacheService.set(cacheKey, products);
 
         return {
             data: {

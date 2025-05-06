@@ -1,6 +1,7 @@
 import { NewProduct } from "@db/schema/products";
 import { InternalServerErrorResponse } from "@src/commons/patterns";
 import { createNewProduct } from "../dao/createNewProduct.dao";
+import { CacheService } from "@src/utils/cache";
 
 export const createProductService = async (
     name: string,
@@ -27,6 +28,13 @@ export const createProductService = async (
         }
 
         const newProduct = await createNewProduct(productData)
+
+        // Invalidate caches
+        const cacheService = CacheService.getInstance();
+        await cacheService.del(`products:all:${SERVER_TENANT_ID}`);
+        if (category_id) {
+            await cacheService.del(`products:category:${SERVER_TENANT_ID}:${category_id}`);
+        }
 
         return {
             data: newProduct,
