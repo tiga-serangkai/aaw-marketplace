@@ -25,7 +25,7 @@ export const placeOrderService = async (
         }
 
         // get the cart items
-        const cartItems = await getAllCartItems(SERVER_TENANT_ID, user.id);
+        const cartItems = await getAllCartItems(SERVER_TENANT_ID, user.id, 10, 0);
 
         // get the product datas
         const productIds = cartItems.map((item) => item.product_id);
