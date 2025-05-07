@@ -19,7 +19,7 @@ app.use(metricsMiddleware);
 app.use(cors());
 app.use(express.json());
 
-app.use("/product", productRoutes)
+app.use("/api/product", productRoutes)
 
 app.get("/", (req, res) => {
   return res.status(200).send("Products Microservice is running!");

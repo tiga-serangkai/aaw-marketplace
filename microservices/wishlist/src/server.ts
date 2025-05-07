@@ -19,7 +19,7 @@ app.use(metricsMiddleware);
 app.use(cors());
 app.use(express.json());
 
-app.use('/wishlist', wishlistRoutes);
+app.use('/api/wishlist', wishlistRoutes);
 
 app.get("/", (req, res) => {
   return res.status(200).send("Wishlist Microservice is running!");

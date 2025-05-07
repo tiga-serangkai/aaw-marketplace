@@ -13,3 +13,4 @@ export default {
     database: process.env.DB_NAME ?? "postgres",
   },
 } satisfies Config;
+

@@ -10,7 +10,7 @@ export const getAllProductsService = async () => {
         }
 
         const cacheService = CacheService.getInstance();
-        const cacheKey = `products:all:${SERVER_TENANT_ID}`;
+        const cacheKey = `product:all:${SERVER_TENANT_ID}`;
 
         // Try to get from cache first
         const cachedProducts = await cacheService.get(cacheKey);

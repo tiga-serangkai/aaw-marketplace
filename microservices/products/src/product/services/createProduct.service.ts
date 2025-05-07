@@ -31,9 +31,9 @@ export const createProductService = async (
 
         // Invalidate caches
         const cacheService = CacheService.getInstance();
-        await cacheService.del(`products:all:${SERVER_TENANT_ID}`);
+        await cacheService.del(`product:all:${SERVER_TENANT_ID}`);
         if (category_id) {
-            await cacheService.del(`products:category:${SERVER_TENANT_ID}:${category_id}`);
+            await cacheService.del(`product:category:${SERVER_TENANT_ID}:${category_id}`);
         }
 
         return {

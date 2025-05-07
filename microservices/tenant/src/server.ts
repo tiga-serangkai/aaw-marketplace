@@ -19,7 +19,7 @@ app.use(metricsMiddleware);
 app.use(cors());
 app.use(express.json());
 
-app.use("/tenant", tenantRoutes);
+app.use("/api/tenant", tenantRoutes);
 
 app.get("/", (req, res) => {
   return res.status(200).send("Tenant Microservice is running!");

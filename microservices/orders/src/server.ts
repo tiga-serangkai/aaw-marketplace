@@ -20,8 +20,8 @@ app.use(metricsMiddleware);
 app.use(cors());
 app.use(express.json());
 
-app.use('/order', orderRoutes);
-app.use('/cart', cartRoutes);
+app.use('/api/order', orderRoutes);
+app.use('/api/cart', cartRoutes);
 
 app.get("/", (req, res) => {
   return res.status(200).send("Orders Microservice is running!");

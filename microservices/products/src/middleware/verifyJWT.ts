@@ -12,7 +12,7 @@ export const verifyJWT = async (
       return res.status(401).send({ message: "Invalid token" });
     }
 
-    const payload = await axios.post(`${process.env.AUTH_MS_URL}/user/verify-admin-token`, { token });
+    const payload = await axios.post(`${process.env.AUTH_MS_URL}/api/auth/verify-admin-token`, { token });
     if (payload.status !== 200) {
       return res.status(401).send({ message: "Invalid token" });
     }
@@ -21,7 +21,7 @@ export const verifyJWT = async (
     if (!SERVER_TENANT_ID) {
       return res.status(500).send({ message: "Server Tenant ID not found" });
   }
-    const tenantPayload = await axios.get(`${process.env.TENANT_MS_URL}/tenant/${SERVER_TENANT_ID}`, {
+    const tenantPayload = await axios.get(`${process.env.TENANT_MS_URL}/api/tenant/${SERVER_TENANT_ID}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

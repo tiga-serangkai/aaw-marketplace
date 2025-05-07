@@ -12,7 +12,7 @@ export const getProductByCategoryService = async (
         }
 
         const cacheService = CacheService.getInstance();
-        const cacheKey = `products:category:${SERVER_TENANT_ID}:${category_id}`;
+        const cacheKey = `product:category:${SERVER_TENANT_ID}:${category_id}`;
 
         // Try to get from cache first
         const cachedProducts = await cacheService.get(cacheKey);

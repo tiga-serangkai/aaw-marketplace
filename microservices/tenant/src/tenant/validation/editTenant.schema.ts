@@ -5,6 +5,9 @@ export const editTenantSchema = z.object({
         old_tenant_id: z.string().uuid(),
     }),
     body: z.object({
+        user: z.object({
+            id: z.string().uuid()
+        }),
         tenant_id: z.string().uuid().optional(),
         owner_id: z.string().uuid().optional(),
         name: z.string().optional(),
