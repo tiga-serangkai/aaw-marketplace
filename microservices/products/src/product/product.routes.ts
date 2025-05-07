@@ -17,5 +17,6 @@ router.put('/:id', verifyJWT, validate(Validation.editProductSchema), Handler.ed
 router.put('/category/:category_id', verifyJWT, validate(Validation.editCategorySchema), Handler.editCategoryHandler);
 router.delete('/:id', verifyJWT, validate(Validation.deleteProductSchema), Handler.deleteProductHandler);
 router.delete('/category/:category_id', verifyJWT, validate(Validation.deleteCategorySchema), Handler.deleteCategoryHandler);
+router.get('/health', Handler.healthCheckHandler);
 
 export default router;

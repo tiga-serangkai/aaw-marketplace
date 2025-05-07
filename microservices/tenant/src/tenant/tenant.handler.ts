@@ -25,3 +25,8 @@ export const deleteTenantHandler = async (req: Request, res: Response) => {
     const response = await Service.deleteTenantService(user, tenant_id);
     return res.status(response.status).send(response.data);
 }
+
+export const healthCheckHandler = async (req: Request, res: Response) => {
+    const response = await Service.healthCheckService();
+    return res.status(response.status).send(response.data);
+}   

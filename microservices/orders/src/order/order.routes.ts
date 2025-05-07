@@ -11,5 +11,6 @@ router.get('/:orderId', verifyJWT, validate(Validation.getOrderDetailSchema), Ha
 router.post('', verifyJWT, validate(Validation.placeOrderSchema), Handler.placeOrderHandler);
 router.post('/:orderId/pay', validate(Validation.payOrderSchema), Handler.payOrderHandler);
 router.post('/:orderId/cancel', verifyJWT, validate(Validation.cancelOrderSchema), Handler.cancelOrderHandler);
+router.get('/health', Handler.healthCheckHandler);
 
 export default router;
