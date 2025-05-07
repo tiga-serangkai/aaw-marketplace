@@ -31,7 +31,7 @@ export const createProductHandler = async (req: Request, res: Response) => {
 }
 
 export const getAllCategoryHandler = async (req: Request, res: Response) => {
-    const response = await Service.getAllCategoriesService();
+    const response = await Service.getAllCategoriesService(req.query.page_number as unknown as number, req.query.page_size as unknown as number);
     return res.status(response.status).send(response.data);
 }
 
