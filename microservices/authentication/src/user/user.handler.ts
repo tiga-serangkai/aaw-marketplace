@@ -25,7 +25,3 @@ export const verifyAdminTokenHandler = async (req: Request, res: Response) => {
     return res.status(response.status).json(response.data);
 }
 
-export const healthCheckHandler = async (req: Request, res: Response) => {
-    const response = await Service.healthCheckService();
-    return res.status(response.status).json(response.data);
-};

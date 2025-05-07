@@ -44,8 +44,3 @@ export const removeProductFromWishlistHandler = async (req: Request, res: Respon
     const response = await Service.removeProductFromWishlistService(id, user);
     return res.status(response.status).send(response.data);
 }
-
-export const healthCheckHandler = async (req: Request, res: Response) => {
-    const response = await Service.healthCheckService();
-    return res.status(response.status).send(response.data);
-}   

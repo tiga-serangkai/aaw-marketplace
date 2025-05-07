@@ -34,8 +34,3 @@ export const cancelOrderHandler = async (req: Request, res: Response) => {
     const response = await Service.cancelOrderService(user, orderId);
     return res.status(response.status).send(response.data);
 }
-
-export const healthCheckHandler = async (req: Request, res: Response) => {
-    const response = await Service.healthCheckService();
-    return res.status(response.status).send(response.data);
-}   

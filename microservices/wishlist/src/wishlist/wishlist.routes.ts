@@ -13,6 +13,5 @@ router.put('/:id', verifyJWT, validate(Validation.updateWishlistSchema), Handler
 router.delete('/remove', verifyJWT, validate(Validation.removeProductFromWishlistSchema), Handler.removeProductFromWishlistHandler);
 router.delete('/:id', verifyJWT, validate(Validation.deleteWishlistSchema), Handler.deleteWishlistHandler);
 router.post('/add', verifyJWT, validate(Validation.addProductToWishlistSchema), Handler.addProductToWishlistHandler);
-router.get('/health', Handler.healthCheckHandler);
 
 export default router;

@@ -10,6 +10,5 @@ router.get('/:tenant_id', verifyJWT, validate(Validation.getTenantSchema), Handl
 router.post('', verifyJWT, validate(Validation.createTenantSchema), Handler.createTenantHandler);
 router.put('/:old_tenant_id', verifyJWT, validate(Validation.editTenantSchema), Handler.editTenantHandler);
 router.delete('', verifyJWT, validate(Validation.deleteTenantSchema), Handler.deleteTenantHandler);
-router.get('/health', Handler.healthCheckHandler);
 
 export default router;

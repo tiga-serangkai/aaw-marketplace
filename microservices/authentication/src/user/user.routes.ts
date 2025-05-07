@@ -9,7 +9,6 @@ router.post("/register", validate(Validation.registerSchema), Handler.registerHa
 router.post("/login", validate(Validation.loginSchema), Handler.loginHandler);
 router.post("/verify-token", validate(Validation.verifyTokenSchema), Handler.verifyTokenHandler);
 router.post("/verify-admin-token", validate(Validation.verifyAdminTokenSchema), Handler.verifyAdminTokenHandler);
-router.get("/health", Handler.healthCheckHandler);
 
 export default router;
 

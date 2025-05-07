@@ -10,6 +10,5 @@ router.get('', verifyJWT, Handler.getAllCartItemsHandler);
 router.post('', verifyJWT, validate(Validation.addItemToCartSchema), Handler.addItemToCartHandler);
 router.put('', verifyJWT, validate(Validation.editCartItemSchema), Handler.editCartItemHandler);
 router.delete('', verifyJWT, validate(Validation.deleteCartItemSchema), Handler.deleteCartItemHandler);
-router.get('/health', Handler.healthCheckHandler);
 
 export default router;

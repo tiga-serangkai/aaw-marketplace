@@ -6,6 +6,7 @@ import cors from "cors";
 import express_prom_bundle from "express-prom-bundle";
 
 import wishlistRoutes from "./wishlist/wishlist.routes";
+import { healthCheckService } from './wishlist/services/healthCheck.service';
 
 const metricsMiddleware = express_prom_bundle({
   includeMethod: true,
@@ -23,6 +24,11 @@ app.use('/api/wishlist', wishlistRoutes);
 
 app.get("/", (req, res) => {
   return res.status(200).send("Wishlist Microservice is running!");
+});
+
+app.get("/health", async (req, res) => {
+  const response = await healthCheckService();
+  return res.status(response.status).json(response.data);
 });
 
 const PORT = process.env.PORT || 8004;

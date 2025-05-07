@@ -6,6 +6,8 @@ import cors from "cors";
 import express_prom_bundle from "express-prom-bundle";
 
 import productRoutes from './product/product.routes'
+import { healthCheckService } from './product/services/healthCheck.service';
+
 
 const metricsMiddleware = express_prom_bundle({
   includeMethod: true,
@@ -23,6 +25,11 @@ app.use("/api/product", productRoutes)
 
 app.get("/", (req, res) => {
   return res.status(200).send("Products Microservice is running!");
+});
+
+app.get("/health", async (req, res) => {
+  const response = await healthCheckService();
+  return res.status(response.status).json(response.data);
 });
 
 const PORT = process.env.PORT || 8002;
