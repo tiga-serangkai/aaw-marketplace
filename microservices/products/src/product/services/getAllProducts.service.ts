@@ -39,7 +39,7 @@ export const getAllProductsService = async (page_number: number = 1, page_size: 
         if (Array.isArray(cachedProducts) && totalProducts !== null) {
             return {
                 data: {
-                    products: cachedProducts,
+                    products:cachedProducts,
                     page_number,
                     page_size: 10,
                 },
@@ -58,7 +58,7 @@ export const getAllProductsService = async (page_number: number = 1, page_size: 
         if (products.length === 0 && page_number > 1) {
             return {
                 data: {
-                    products: [],
+                    products,
                     page_number,
                     page_size: 10,
                 },

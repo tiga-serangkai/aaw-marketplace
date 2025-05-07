@@ -63,7 +63,7 @@ export const getAllOrdersService = async (
         if (orders.length === 0 && page_number > 1) {
             return {
                 data: {
-                    orders: [],
+                    orders,
                     page_number,
                     page_size: 10,
                 },

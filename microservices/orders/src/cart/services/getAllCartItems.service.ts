@@ -41,7 +41,7 @@ export const getAllCartItemsService = async (
         if (items.length === 0 && page_number > 1) {
             return {
                 data: {
-                    items: [],
+                    items,
                     page_number,
                     page_size: 10,
                 },
@@ -51,7 +51,7 @@ export const getAllCartItemsService = async (
 
         return {
             data: {
-                items: items,
+                items,
                 page_number,
                 page_size: 10,
             },
