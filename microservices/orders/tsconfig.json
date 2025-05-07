@@ -19,5 +19,5 @@
     "require": ["tsconfig-paths/register"]
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "**/*.js"]
+  "exclude": ["node_modules", "**/*.js", "dist"]
 }
