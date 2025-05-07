@@ -9,13 +9,23 @@ export const getAllProductsService = async (page_number: number = 1, page_size: 
             return new InternalServerErrorResponse('Server Tenant ID not found').generate()
         }
 
-        // Set default values for pagination if not provided
-        page_number = Number(page_number) || 1;
         page_size = Number(page_size) || 10;
 
+        // Validate page_size
+        if (page_size !== 10) {
+            return {
+                status: 400,
+                data: {
+                    message: "Invalid page_size. Only page_size=10 is allowed.",
+                },
+            };
+        }
+
+        page_number = Number(page_number) || 1;
+
         // Calculate offset and limit for pagination
-        const offset = (page_number - 1) * page_size;
-        const limit = page_size;
+        const offset = (page_number - 1) * 10;
+        const limit = 10;
 
         const cacheService = CacheService.getInstance();
         const cacheKeyPrefix = `products:${SERVER_TENANT_ID}`;
@@ -31,7 +41,7 @@ export const getAllProductsService = async (page_number: number = 1, page_size: 
                 data: {
                     products: cachedProducts,
                     page_number,
-                    page_size,
+                    page_size: 10,
                 },
                 status: 200,
             };
@@ -50,7 +60,7 @@ export const getAllProductsService = async (page_number: number = 1, page_size: 
                 data: {
                     products: [],
                     page_number,
-                    page_size,
+                    page_size: 10,
                 },
                 status: 200,
                 message: "No products found for the given page"
@@ -61,7 +71,7 @@ export const getAllProductsService = async (page_number: number = 1, page_size: 
             data: {
                 products,
                 page_number,
-                page_size, 
+                page_size: 10, 
             },
             status: 200
         }
