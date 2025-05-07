@@ -59,4 +59,22 @@ export class OrderCacheService {
             await redis.del(...keys);
         }
     }
+
+    async get<T>(key: string): Promise<T | null> {
+      try {
+        const data = await redis.get(key);
+        return data ? JSON.parse(data) : null;
+      } catch (error) {
+        console.error('Cache get error:', error);
+        return null;
+      }
+    }
+    
+    async set(key: string, value: any, ttl: number = this.orderListTTL): Promise<void> {
+      try {
+        await redis.set(key, JSON.stringify(value), 'EX', ttl);
+      } catch (error) {
+        console.error('Cache set error:', error);
+      }
+    }
 } 
