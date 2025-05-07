@@ -2,6 +2,7 @@ import { InternalServerErrorResponse, NotFoundResponse, UnauthorizedResponse } f
 import { deleteTenantById } from "../dao/deleteTenantById.dao";
 import { User } from "@type/user";
 import { getTenantById } from "../dao/getTenantById.dao";
+import { TenantCacheService } from "@src/utils/cache";
 
 export const deleteTenantService = async (
     user: User,
@@ -21,6 +22,10 @@ export const deleteTenantService = async (
         if (!tenant) {
             return new NotFoundResponse('Tenant not found').generate()
         }
+
+        // Invalidate caches
+        const cacheService = TenantCacheService.getInstance();
+        await cacheService.del(`tenant:${tenant_id}`);
 
         return {
             data: {

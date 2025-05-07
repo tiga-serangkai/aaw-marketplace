@@ -2,6 +2,7 @@ import { InternalServerErrorResponse, NotFoundResponse, UnauthorizedResponse } f
 import { editTenantById } from "../dao/editTenantById.dao"
 import { getTenantById } from "../dao/getTenantById.dao"
 import { User } from "@type/user";
+import { TenantCacheService } from "@src/utils/cache";
 
 export const editTenantService = async (
     old_tenant_id: string,
@@ -24,6 +25,11 @@ export const editTenantService = async (
         if (!tenant) {
             return new InternalServerErrorResponse('Error editing tenant').generate()
         }
+
+        // Invalidate caches
+        const cacheService = TenantCacheService.getInstance();
+        await cacheService.del(`tenant:${old_tenant_id}`);
+        
         
         return {
             data: tenant,
