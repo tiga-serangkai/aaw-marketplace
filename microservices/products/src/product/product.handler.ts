@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import * as Service from './services';
 
 export const getAllProductsHandler = async (req: Request, res: Response) => {
-    const response = await Service.getAllProductsService();
+    const response = await Service.getAllProductsService(req.query.page_number as unknown as number, req.query.page_size as unknown as number);
     return res.status(response.status).send(response.data);
 }
 
