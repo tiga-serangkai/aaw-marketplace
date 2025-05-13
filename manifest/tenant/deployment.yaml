@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tenant-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tenant-app
+  template:
+    metadata:
+      labels:
+        app: tenant-app
+    spec:
+      nodeSelector:
+        workload: small
+      containers:
+      - name: tenant-app
+        image: divieurora/tenant:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8003
+        envFrom:
+        - configMapRef:
+            name: marketplace-config

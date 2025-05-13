@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: marketplace-config
+data:
+  AUTH_MS_URL: "http://auth-service.svc.cluster.local:8000"
+  ORDER_MS_URL: "http://order-service.svc.cluster.local:8001"
+  PRODUCT_MS_URL: "http://product-service.svc.cluster.local:8002"
+  TENANT_MS_URL: "http://tenant-service.svc.cluster.local:8003"
+  WISHLIST_MS_URL: "http://wishlist-service.svc.cluster.local:8004"
+  TENANT_ID: "47dd6b24-0b23-46b0-a662-776158d089ba"
+  JWT_SECRET: "auth_ms_jwt_secret"

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wishlist-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wishlist-app
+  template:
+    metadata:
+      labels:
+        app: wishlist-app
+    spec:
+      nodeSelector:
+        workload: small
+      containers:
+      - name: wishlist-app
+        image: divieurora/wishlist:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8004
+        envFrom:
+        - configMapRef:
+            name: marketplace-config

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-app
+  template:
+    metadata:
+      labels:
+        app: product-app
+    spec:
+      nodeSelector:
+        workload: heavy
+      containers:
+      - name: product-app
+        image: divieurora/products:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8002
+        envFrom:
+        - configMapRef:
+            name: marketplace-config

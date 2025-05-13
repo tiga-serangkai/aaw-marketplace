@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  auth:
+    build:
+      context: ./authentication
+    image: divieurora/auth
+
+  orders:
+    build:
+      context: ./orders
+    image: divieurora/orders
+
+  products:
+    build:
+      context: ./products
+    image: divieurora/products
+
+  tenant:
+    build:
+      context: ./tenant
+    image: divieurora/tenant
+
+  wishlist:
+    build:
+      context: ./wishlist
+    image: divieurora/wishlist
