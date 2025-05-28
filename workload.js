@@ -10,11 +10,11 @@ export const options = {
       executor: 'ramping-vus',
       startVUs: 0,
       stages: [
-        { duration: '1m', target: 50 },
+        { duration: '1m', target: 30 },
+        { duration: '2m', target: 75 },
+        { duration: '3m', target: 150 },
         { duration: '2m', target: 150 },
-        { duration: '3m', target: 300 },
-        { duration: '2m', target: 300 },
-        { duration: '2m', target: 50 },
+        { duration: '2m', target: 75 },
       ],
       gracefulRampDown: '30s',
     },
@@ -42,10 +42,10 @@ export const options = {
 };
 
 // Base URLs
-const AUTH_SERVICE_URL = 'http://localhost:8000/api/auth';
-const PRODUCT_SERVICE_URL = 'http://localhost:8002/api/product';
-const CART_SERVICE_URL = 'http://localhost:8001/api/cart';
-const ORDER_SERVICE_URL = 'http://localhost:8001/api/order'; 
+const AUTH_SERVICE_URL = 'http://13.218.250.171:30000/api/auth';
+const PRODUCT_SERVICE_URL = 'http://13.218.250.171:30002/api/product';
+const CART_SERVICE_URL = 'http://13.218.250.171:30001/api/cart';
+const ORDER_SERVICE_URL = 'http://13.218.250.171:30001/api/order';
 
 const specialOrderUser = {
   username: "nangis",
